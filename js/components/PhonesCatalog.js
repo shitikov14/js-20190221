@@ -4,6 +4,17 @@ export default class PhonesCatalog {
     this.props = props;
 
     this.render();
+
+    this.element.addEventListener('click', (event) => {
+      const link = event.target.closest('[data-element="PhoneLink"]');
+
+      if (!link) {
+        return;
+      }
+
+      const phoneId = link.dataset.phoneId;
+      this.props.onPhoneSelected(phoneId);
+    });
   }
 
   render() {
@@ -13,7 +24,12 @@ export default class PhonesCatalog {
           ${ this.props.phones.map(phone => `
             
             <li class="thumbnail">
-              <a href="#!/phones/${ phone.id }" class="thumb">
+              <a
+                data-element="PhoneLink"
+                data-phone-id="${ phone.id }"
+                href="#!/phones/${ phone.id }"
+                class="thumb"
+              >
                 <img alt="${ phone.name }" src="${ phone.imageUrl }">
               </a>
   
@@ -23,7 +39,15 @@ export default class PhonesCatalog {
                 </a>
               </div>
   
-              <a href="#!/phones/${ phone.id }">${ phone.name }</a>
+              <a
+                data-element="PhoneLink"
+                data-phone-id="${ phone.id }"
+                href="#!/phones/${ phone.id }"
+              >
+              
+                ${ phone.name }
+              </a>
+              
               <p>${ phone.snippet }</p>
             </li>
           
