@@ -8,9 +8,13 @@ export default class PhonesPage {
 
     this.render();
 
-    new PhonesCatalog(this.element.querySelector('[data-component="PhonesCatalog"]'));
-    new ShoppingCart(this.element.querySelector('[data-component="ShoppingCart"]'));
-    new Filter(this.element.querySelector('[data-component="Filter"]'));
+    this.initComponent(PhonesCatalog);
+    this.initComponent(ShoppingCart);
+    this.initComponent(Filter);
+  }
+
+  initComponent(Constructor) {
+    new Constructor(this.element.querySelector(`[data-component="${Constructor.name}"]`));
   }
 
   render() {
