@@ -1,6 +1,7 @@
 import PhonesCatalog from './PhonesCatalog.js';
 import ShoppingCart from './ShoppingCart.js';
 import Filter from './Filter.js';
+import { getAll, getById } from '../api/phones.js';
 
 export default class PhonesPage {
   constructor(element) {
@@ -8,13 +9,19 @@ export default class PhonesPage {
 
     this.render();
 
-    this.initComponent(PhonesCatalog);
+    this.initComponent(PhonesCatalog, {
+      phones: getAll(),
+    });
+
     this.initComponent(ShoppingCart);
     this.initComponent(Filter);
   }
 
-  initComponent(Constructor) {
-    new Constructor(this.element.querySelector(`[data-component="${Constructor.name}"]`));
+  initComponent(Constructor, props = {}) {
+    new Constructor(
+      this.element.querySelector(`[data-component="${Constructor.name}"]`),
+      props
+    );
   }
 
   render() {
