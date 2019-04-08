@@ -6,8 +6,8 @@ import Filter from './Filter.js';
 import { getAll, getById } from '../api/phones.js';
 
 export default class PhonesPage extends Component {
-  constructor(element) {
-    super(element);
+  constructor(element, props) {
+    super(element, props);
 
     this.state = {
       phones: getAll().slice(0, 5),
@@ -40,22 +40,26 @@ export default class PhonesPage extends Component {
     });
   }
 
-  setSelectedPhone(phoneId) {
+  selectedPhone(phoneId) {
     this.setState({
       selectedPhone: getById(phoneId),
     });
   }
 
+  unselectedPhone() {
+    this.setState({ selectedPhone: null });
+  }
+
   init() {
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
-      onPhoneSelected: (phoneId) => this.setSelectedPhone(phoneId),
+      onPhoneSelected: (phoneId) => this.selectedPhone(phoneId),
       onAdd: (phoneId) => this.addItem(phoneId),
     });
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
-      onBack: () => this.setSelectedPhone(null),
+      onBack: () => this.unselectedPhone(),
       onAdd: (phoneId) => this.addItem(phoneId),
     });
 
