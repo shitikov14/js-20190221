@@ -5,14 +5,14 @@ import ShoppingCart from './ShoppingCart.js';
 import Filter from './Filter.js';
 import { getAll, getById } from '../api/phones.js';
 
-export default class PhonesPage extends Component{
+export default class PhonesPage extends Component {
   constructor(element) {
     super(element);
 
     this.state = {
-      phones: getAll(),
+      phones: getAll().slice(0, 5),
       selectedPhone: null,
-      items: []
+      items: [1, 2, 3],
     };
 
     this.render();
@@ -72,7 +72,11 @@ export default class PhonesPage extends Component{
   
         <!--Main content-->
         <div class="col-md-10">
-          ${ this.state.selectedPhone ? `<div data-component="PhoneViewer"></div>` : `<div data-component="PhonesCatalog"></div>`}
+          ${ this.state.selectedPhone ? `
+            <div data-component="PhoneViewer"></div>
+          ` : `
+            <div data-component="PhonesCatalog"></div>
+          `}
         </div>
       </div>
     `;

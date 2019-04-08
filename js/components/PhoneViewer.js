@@ -4,6 +4,10 @@ export default class PhoneViewer extends Component {
   constructor(element, props) {
     super(element, props);
 
+    this.state = {
+      selectedImage: this.props.phone.images[0],
+    };
+
     this.render();
 
     this.on('click', 'BackButton', () => {
@@ -13,6 +17,14 @@ export default class PhoneViewer extends Component {
     this.on('click', 'AddButton', () => {
       this.props.onAdd(this.props.phone.id);
     });
+
+    this.on('click', 'SmallImage', (event) => {
+      const imageUrl = event.delegateTarget.dataset.imageUrl;
+
+      this.setState({
+        selectedImage: imageUrl,
+      });
+    });
   }
 
   render() {
@@ -20,35 +32,22 @@ export default class PhoneViewer extends Component {
 
     this.element.innerHTML = `
       <div>
-        <img class="phone" src="${ phone.images[0] }">
+        
+        <img class="phone" src="${ this.state.selectedImage }">
     
         <button data-element="BackButton">Back</button>
         <button data-element="AddButton">Add to basket</button>
-    
     
         <h1>${ phone.name }</h1>
     
         <p>${ phone.description }</p>
     
         <ul class="phone-thumbs">
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.0.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.1.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.2.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.3.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.4.jpg">
-          </li>
-          <li>
-            <img src="img/phones/motorola-xoom-with-wi-fi.5.jpg">
-          </li>
+          ${ phone.images.map(imageUrl => `
+            <li data-element="SmallImage" data-image-url="${imageUrl}">
+              <img src="${ imageUrl }">
+            </li>
+          `).join('') }
         </ul>
       </div>
     `;
