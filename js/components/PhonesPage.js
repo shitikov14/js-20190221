@@ -11,6 +11,7 @@ export default class PhonesPage {
     this.state = {
       phones: getAll(),
       selectedPhone: null,
+      items: []
     };
 
     this.render();
@@ -23,6 +24,31 @@ export default class PhonesPage {
     };
 
     this.render();
+  }
+
+  init() {
+    this.initComponent(PhonesCatalog, {
+      phones: this.state.phones,
+
+      onPhoneSelected: (phoneId) => {
+        this.setState({
+          selectedPhone: getById(phoneId),
+        });
+      },
+    });
+
+    this.initComponent(PhoneViewer, {
+      phone: this.state.selectedPhone,
+
+      onBack: () => {
+        this.setState({
+          selectedPhone: null,
+        });
+      },
+    });
+
+    this.initComponent(ShoppingCart);
+    this.initComponent(Filter);
   }
 
   initComponent(Constructor, props = {}) {
@@ -51,30 +77,11 @@ export default class PhonesPage {
   
         <!--Main content-->
         <div class="col-md-10">
-          ${ this.state.selectedPhone ? `
-            <div data-component="PhoneViewer"></div>
-          ` : `
-            <div data-component="PhonesCatalog"></div>
-          `}
+          ${ this.state.selectedPhone ? `<div data-component="PhoneViewer"></div>` : `<div data-component="PhonesCatalog"></div>`}
         </div>
       </div>
     `;
 
-    this.initComponent(PhonesCatalog, {
-      phones: this.state.phones,
-
-      onPhoneSelected: (phoneId) => {
-        this.setState({
-          selectedPhone: getById(phoneId),
-        });
-      }
-    });
-
-    this.initComponent(PhoneViewer, {
-      phone: this.state.selectedPhone,
-    });
-
-    this.initComponent(ShoppingCart);
-    this.initComponent(Filter);
+    this.init();
   }
 }
