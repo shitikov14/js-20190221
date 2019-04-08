@@ -18,6 +18,11 @@ export default class PhonesPage extends Component {
       },
     };
 
+    this.onPhoneSelected = (phoneId) => this.selectedPhone(phoneId);
+    this.onAdd = (phoneId) => this.addItem(phoneId);
+    this.onBack = () => this.unselectedPhone();
+    this.onRemove = (itemToRemove) => this.removeItem(itemToRemove);
+
     this.render();
   }
 
@@ -53,19 +58,19 @@ export default class PhonesPage extends Component {
   init() {
     this.initComponent(PhonesCatalog, {
       phones: this.state.phones,
-      onPhoneSelected: (phoneId) => this.selectedPhone(phoneId),
-      onAdd: (phoneId) => this.addItem(phoneId),
+      onPhoneSelected: this.onPhoneSelected,
+      onAdd: this.onAdd,
     });
 
     this.initComponent(PhoneViewer, {
       phone: this.state.selectedPhone,
-      onBack: () => this.unselectedPhone(),
-      onAdd: (phoneId) => this.addItem(phoneId),
+      onBack: this.onBack,
+      onAdd: this.onAdd,
     });
 
     this.initComponent(ShoppingCart, {
       items: this.state.items,
-      onRemove: (itemToRemove) => this.removeItem(itemToRemove)
+      onRemove: this.onRemove,
     });
 
     this.initComponent(Filter);
