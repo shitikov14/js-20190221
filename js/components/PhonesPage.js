@@ -1,26 +1,18 @@
+import Component from '../Component.js';
 import PhonesCatalog from './PhonesCatalog.js';
 import PhoneViewer from './PhoneViewer.js';
 import ShoppingCart from './ShoppingCart.js';
 import Filter from './Filter.js';
 import { getAll, getById } from '../api/phones.js';
 
-export default class PhonesPage {
+export default class PhonesPage extends Component{
   constructor(element) {
-    this.element = element;
+    super(element);
 
     this.state = {
       phones: getAll(),
       selectedPhone: null,
       items: []
-    };
-
-    this.render();
-  }
-
-  setState(newState) {
-    this.state = {
-      ...this.state,
-      ...newState,
     };
 
     this.render();
@@ -49,15 +41,6 @@ export default class PhonesPage {
 
     this.initComponent(ShoppingCart);
     this.initComponent(Filter);
-  }
-
-  initComponent(Constructor, props = {}) {
-    const componentName = Constructor.name;
-    const element = this.element.querySelector(`[data-component="${componentName}"]`);
-
-    if (element) {
-      new Constructor(element, props);
-    }
   }
 
   render() {
