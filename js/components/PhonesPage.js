@@ -37,9 +37,15 @@ export default class PhonesPage extends Component{
           selectedPhone: null,
         });
       },
+
+      onAdd: (phoneId) => {
+        this.setState({
+          items: [...this.state.items, phoneId],
+        });
+      },
     });
 
-    this.initComponent(ShoppingCart);
+    this.initComponent(ShoppingCart, { items: this.state.items });
     this.initComponent(Filter);
   }
 
