@@ -12,7 +12,7 @@ export default class PhonesPage extends Component {
     this.state = {
       phones: getAll().slice(0, 5),
       selectedPhone: null,
-      items: [1, 2, 3],
+      items: ['1', '2', '3'],
     };
 
     this.render();
@@ -51,7 +51,15 @@ export default class PhonesPage extends Component {
       },
     });
 
-    this.initComponent(ShoppingCart, { items: this.state.items });
+    this.initComponent(ShoppingCart, {
+      items: this.state.items,
+
+      onRemove: (itemToRemove) => {
+        this.setState({
+          items: this.state.items.filter(item => item !== itemToRemove)
+        });
+      },
+    });
     this.initComponent(Filter);
   }
 

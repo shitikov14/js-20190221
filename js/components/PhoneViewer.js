@@ -32,7 +32,6 @@ export default class PhoneViewer extends Component {
 
     this.element.innerHTML = `
       <div>
-        
         <img class="phone" src="${ this.state.selectedImage }">
     
         <button data-element="BackButton">Back</button>
