@@ -7,12 +7,18 @@ export default class PhoneViewer extends Component {
     this.render();
 
     this.element.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-element="BackButton"]');
+      const button = event.target.closest(
+        '[data-element="BackButton"]'
+      );
 
       if (!button) {
         return;
       }
 
+      this.props.onBack();
+    });
+
+    this.on('click', 'BackButton', () => {
       this.props.onBack();
     });
   }
