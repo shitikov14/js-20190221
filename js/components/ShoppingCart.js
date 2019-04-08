@@ -17,10 +17,10 @@ export default class ShoppingCart extends Component {
       <div>
         <h4>Shopping Cart</h4>
         <ul>
-          ${ this.props.items.map(item => `
+          ${ Object.keys(this.props.items).map(item => `
           
             <li>
-              ${item}
+              ${item} - ${this.props.items[item]}
               <button
                 data-element="RemoveButton"
                 data-item="${item}"
