@@ -27,6 +27,12 @@ export default class PhonesPage extends Component{
           selectedPhone: getById(phoneId),
         });
       },
+
+      onAdd: (phoneId) => {
+        this.setState({
+          items: [...this.state.items, phoneId],
+        });
+      },
     });
 
     this.initComponent(PhoneViewer, {

@@ -18,8 +18,13 @@ export default class PhonesCatalog extends Component {
     });
 
     this.on('click', 'PhoneLink', (event) => {
-      const phoneId = event.delegateTarget.dataset.phoneID;
+      const phoneId = event.delegateTarget.dataset.phoneId;
       this.props.onPhoneSelected(phoneId);
+    });
+
+    this.on('click', 'AddButton', (event) => {
+      const phoneId = event.delegateTarget.dataset.phoneId;
+      this.props.onAdd(phoneId);
     });
   }
 
@@ -40,7 +45,11 @@ export default class PhonesCatalog extends Component {
               </a>
   
               <div class="phones__btn-buy-wrapper">
-                <a class="btn btn-success">
+                <a
+                  data-element="AddButton"
+                  data-phone-id="${ phone.id }"
+                  class="btn btn-success"
+                >
                   Add
                 </a>
               </div>
