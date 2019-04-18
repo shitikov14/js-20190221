@@ -1,4 +1,4 @@
-import PhonesCatalog from './PhonesCatalog.js';
+import PhonesCataloge from './PhonesCataloge.js';
 import ShoppingCart from './ShoppingCart.js';
 import Filter from './Filter.js';
 
@@ -8,30 +8,35 @@ export default class PhonesPage {
 
         this.render();
 
-        new PhonesCatalog(this.element.querySelector('[data-component="PhonesPage"]'));
-        new ShoppingCart(this.element.querySelector('[data-component="ShoppingCart"]'));
-        new Filter(this.element.querySelector('[data-component="Filter"]'));
+        this.initComponent(PhonesCataloge);
+        this.initComponent(ShoppingCart);
+        this.initComponent(Filter);
     }
-    render() {
-        this.element.innerHTML = `
-        <div class="row">
 
-          <!--Sidebar-->
-          <div class="col-md-2">
-            <section>
-              <div data-component="Filter"></div>
-            </section>
+        initComponent(Constructor) {
+            new Constructor(this.element.querySelector(`[data-component="${Constructor.name}"]`));
+        }
 
-            <section>
-              <div data-component="ShoppingCart"></div>
-            </section>
-          </div>
+        render() {
+            this.element.innerHTML = `
+            <div class="row">
 
-          <!--Main content-->
-          <div class="col-md-10">
-              <div data-component="PhonesCatalog"></div>
-          </div>
-        </div>
-        `;
+              <!--Sidebar-->
+              <div class="col-md-2">
+                <section>
+                  <div data-component="Filter"></div>
+                </section>
+
+                <section>
+                  <div data-component="ShoppingCart"></div>
+                </section>
+              </div>
+
+              <!--Main content-->
+              <div class="col-md-10">
+                  <div data-component="PhonesCataloge"></div>
+              </div>
+            </div>
+            `;
+        }
     }
-}

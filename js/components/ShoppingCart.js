@@ -1,5 +1,5 @@
 export default class ShoppingCart {
-    constructor() {
+    constructor(element) {
         this.element = element;
 
         this.render();

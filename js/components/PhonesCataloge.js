@@ -1,5 +1,5 @@
-export default class PhonesCatalog {
-    constructor() {
+export default class PhonesCataloge {
+    constructor(element) {
         this.element = element;
 
         this.render();
