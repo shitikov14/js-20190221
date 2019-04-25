@@ -1,20 +1,37 @@
 import PhonesCataloge from './PhonesCataloge.js';
+import PhoneViewer from './PhoneViewer.js';
 import ShoppingCart from './ShoppingCart.js';
 import Filter from './Filter.js';
+import {getAll, getById} from '../api/phones.js';
 
 export default class PhonesPage {
     constructor(element) {
         this.element = element;
 
-        this.render();
+        this.state = {
+            phones: getAll(),
+            selectedPhone: null,
+        };
 
-        this.initComponent(PhonesCataloge);
-        this.initComponent(ShoppingCart);
-        this.initComponent(Filter);
+        this.render();
     }
 
-        initComponent(Constructor) {
-            new Constructor(this.element.querySelector(`[data-component="${Constructor.name}"]`));
+    setState(newState) {
+        this.state = {
+            ...this.state,
+            ...newState,
+        };
+
+        this.render();
+    }
+
+        initComponent(Constructor, props = {}) {
+            const componentName = Constructor.name;
+            const element = this.element.querySelector(`[data-component="${componentName}"]`);
+
+            if (element) {
+                new Constructor(element, props);
+            }
         }
 
         render() {
@@ -34,9 +51,29 @@ export default class PhonesPage {
 
               <!--Main content-->
               <div class="col-md-10">
+              ${ this.state.selectedPhone ? `
+                  <div data-component="PhoneViewer"></div>
+                  ` : `
                   <div data-component="PhonesCataloge"></div>
+                  `}
               </div>
             </div>
             `;
+
+
+            this.initComponent(PhonesCataloge, {
+                phones: this.state.phones,
+                onPhoneSelected: (phoneId) =>  {
+                    this.setState({
+                        selectedPhone: getById(phoneId),
+                    });
+                }
+            });
+
+            this.initComponent(PhoneViewer, {
+                phone: this.state.selectedPhone,
+            });
+            this.initComponent(ShoppingCart);
+            this.initComponent(Filter);
         }
     }
